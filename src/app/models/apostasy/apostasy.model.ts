@@ -1,5 +1,5 @@
 import { ApostasyClass } from "./apostasy-class.model";
 
-export interface Apostasies{
-    apostasy: ApostasyClass[];
+export interface Apostasy{
+    apostasies: ApostasyClass[];
 }
