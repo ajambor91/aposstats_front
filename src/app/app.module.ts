@@ -16,6 +16,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker'
 import { GraphComponent } from './components/chart/graph/graph.component'
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AddComponentDirective } from './directives/add-component.directive';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     HeaderComponent,
     ChartComponent,
     BarComponent,
-    GraphComponent
+    GraphComponent,
+    AddComponentDirective
   ],
   imports: [
     BrowserModule,
