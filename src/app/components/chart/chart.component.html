@@ -1,0 +1,17 @@
+<section id="menu">
+    <div>
+        <app-bar 
+        [voivodeships]="voivodeships"
+        [cities] = "cities"
+        (cityIdEmitter)="selectCity($event)"
+        (voivodeshipIdEmitter)="selectVoivodeship($event)"
+        (startDateEmitter)="selectStartDate($event)"
+        (endDateEmitter)="selectEndDate($event)"
+        (periodEmitter)="selectPeriod($event)"></app-bar>
+    </div>
+</section>
+<section id="charts">
+    <div>
+        <app-graph [stats]="statistics"></app-graph>
+    </div>
+</section>

@@ -1,5 +1,6 @@
-import { ApostasyClass } from "./apostasy-class.model";
-
 export interface Apostasy{
-    apostasies: ApostasyClass[];
+    apostasyYear: number;
+    scrappedAt: string;
+    city: string;
+    voivodeship: string;
 }

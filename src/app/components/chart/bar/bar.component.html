@@ -1,0 +1,40 @@
+<div>
+    <mat-form-field>
+        <mat-label>Województwo</mat-label>
+        <mat-select (selectionChange)="selectVoivodeship($event.value)">
+            <mat-option [value]="null">Wszystkie</mat-option>
+            <mat-option *ngFor="let voivodeship of voivodeships" [value]="voivodeship.id">
+                {{voivodeship.name}}
+              </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Miasto</mat-label>
+        <mat-select (selectionChange)="selectCity($event.value)">
+            <mat-option [value]="null">Wszystkie</mat-option>
+            <mat-option *ngFor="let city of cities" [value]="city.id">
+                {{city.name}}
+              </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Okres</mat-label>
+        <mat-select (selectionChange)="selectPeriod($event.value)">
+            <mat-option [value]="PeriodType.ByYear">Rocznie</mat-option>
+            <mat-option [value]="PeriodType.ByMonth">Miesięcznie</mat-option>
+            <mat-option [value]="PeriodType.ByDay">Dziennie</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Podaj okres</mat-label>
+        <mat-date-range-input  [rangePicker]="picker">
+          <input (dateChange)="setStartDate($event)" matStartDate placeholder="Początek">
+          <input (dateChange)="setEndDate($event)" matEndDate placeholder="Koniec">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+</div>

@@ -1,4 +1,5 @@
 export enum PeriodType{
     ByYear,
-    ByMonth
+    ByMonth,
+    ByDay
 }

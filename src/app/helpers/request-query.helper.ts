@@ -1,31 +1,33 @@
 import { Request } from "../models/request/request.model";
 
 export class RequestQueryHelper{
+
     static createQuery(request: Request): string {
         let query = '?';
         if(this.checkIsNotEmpty(request?.cityId)) {
+            query = this.addAmpersand(query);
             query += `cityId=${request.cityId}`;
         }
 
         if(this.checkIsNotEmpty(request?.voivodeshipId)) {
+            query = this.addAmpersand(query);
             query += `voivodeshipId=${request.voivodeshipId}`;
         }
 
         if(this.checkIsNotEmpty(request?.from)) {
-            this.addAmpersand(query);
+            query = this.addAmpersand(query);
             query += `from=${request.from}`;
         }
 
         if(this.checkIsNotEmpty(request?.to)) {
-            this.addAmpersand(query);
-
+            query = this.addAmpersand(query);
             query += `to=${request.to}`;
         }
 
         if (this.checkIsNotEmpty(request?.periodType)) {
-            this.addAmpersand(query);
-            query += `periodBy${request.periodType}`;
-
+            console.log(request.periodType,'period')
+            query = this.addAmpersand(query);
+            query += `periodBy=${request.periodType}`;
         }
         return query;
     }
@@ -42,5 +44,6 @@ export class RequestQueryHelper{
             return query;
         }
         return query += '&';
+        
     }
 }
