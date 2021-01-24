@@ -1,17 +1,21 @@
 <section id="menu">
-    <div>
         <app-bar 
         [voivodeships]="voivodeships"
-        [cities] = "cities"
+        [cities]="cities"
         (cityIdEmitter)="selectCity($event)"
         (voivodeshipIdEmitter)="selectVoivodeship($event)"
         (startDateEmitter)="selectStartDate($event)"
         (endDateEmitter)="selectEndDate($event)"
         (periodEmitter)="selectPeriod($event)"></app-bar>
-    </div>
 </section>
 <section id="charts">
-    <div>
+    <div class="ap-p-relative">
         <app-graph [stats]="statistics"></app-graph>
-    </div>
+    </div>    
+</section>
+j
+<section id="table">
+    <div class="ap-p-relative">
+    <app-table [dataTable]="dataTable"></app-table>
+</div>
 </section>

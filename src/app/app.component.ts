@@ -14,12 +14,9 @@ export class AppComponent implements OnInit{
   constructor(private mainService: MainService){}
 
   ngOnInit(): void {
-    const request: Request = {
-      cityId: 1812
-    };
-    this.mainService.getApostasies(request).subscribe( res => {
-      console.log(res);
-    });
+    // this.mainService.getConfig().subscribe( res => {
+    //   console.log(res);
+    // });
   }
   
 }

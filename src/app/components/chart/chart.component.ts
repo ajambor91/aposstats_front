@@ -4,6 +4,7 @@ import { City } from 'src/app/models/administration-units/city.model';
 import { Voivodeship } from 'src/app/models/administration-units/voivodeship.model';
 import { Request } from 'src/app/models/request/request.model';
 import { Statistics } from 'src/app/models/statisctics/statistic.model';
+import { TableData } from 'src/app/models/statisctics/table-data.model';
 
 import { MainService } from 'src/app/services/main-service';
 
@@ -17,6 +18,7 @@ export class ChartComponent implements OnInit {
   voivodeships: Voivodeship[] = [];
   cities: City[] = [];
   statistics: Statistics[] = [];
+  dataTable: TableData[] = [];
   periodType: PeriodType = PeriodType.ByYear;
   selectedCity: number;
   selectedVoivodeship: number;
@@ -29,14 +31,17 @@ export class ChartComponent implements OnInit {
     this.getStatistics();
   }
 
-  selectCity(id: number): void {
+  selectCity(id: number | null): void {
     this.selectedCity = id;
     this.getStatistics();
 
   }
 
-  selectVoivodeship(id: number): void {
+  selectVoivodeship(id: number | null): void {
     this.selectedVoivodeship = id;
+    if (id == null) {
+      this.selectCity(null);
+    }
     this.getStatistics();
     this.getCities(id);
   }
@@ -57,6 +62,16 @@ export class ChartComponent implements OnInit {
     this.getStatistics();
   }
   
+  private serializeTableData(): void {
+    let i = 0;
+    const arr = [];
+    for (i; i < this.statistics[0].series.length; i++) {
+      let obj: TableData =  Object.assign({}, this.statistics[0].series[i]);;
+      arr.push(obj); 
+    }
+    this.dataTable = arr;
+  }
+
   private getCities(id: number): void {
     this.mainService.getCities(id).subscribe( cities => {
       this.cities = cities;
@@ -79,6 +94,7 @@ export class ChartComponent implements OnInit {
     };
     this.mainService.getStatistics(request).subscribe( stats => {
       this.statistics = stats;
+      this.serializeTableData();
     });
   }
 

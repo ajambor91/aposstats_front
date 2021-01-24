@@ -31,4 +31,8 @@ export class MainService{
     getStatistics(request: Request): Observable<Statistics[]> {
         return this.http.get<Statistics[]>(`${this.config.api}/get-statistics/${RequestQueryHelper.createQuery(request)}`);
     }
+
+    getConfig(): Observable<any> {
+        return this.http.get<any>(`${this.config.api}/config`);
+    }
 }

@@ -26,15 +26,50 @@
             <mat-option [value]="PeriodType.ByMonth">Miesięcznie</mat-option>
             <mat-option [value]="PeriodType.ByDay">Dziennie</mat-option>
         </mat-select>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <mat-label>Podaj okres</mat-label>
-        <mat-date-range-input  [rangePicker]="picker">
-          <input (dateChange)="setStartDate($event)" matStartDate placeholder="Początek">
-          <input (dateChange)="setEndDate($event)" matEndDate placeholder="Koniec">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field> 
+      <mat-form-field>
+        <mat-label>Od</mat-label>
+        <input 
+        matInput
+        [value]="selectedStartDate |date: format"
+        >
+        <input
+        [matDatepicker]="pickerSD"
+        [min]="minDate" 
+        [max]="maxDate" 
+        (dateChange)="getStartDate($event)"
+        class="shadow-input"
+        />     
+        <mat-datepicker-toggle matSuffix [for]="pickerSD"></mat-datepicker-toggle>
+        <mat-datepicker  
+        #pickerSD
+        (yearSelected)="getMinYear($event, pickerSD)"
+        (monthSelected)="getMinMonth($event, pickerSD)"
+        startView="multi-year"
+
+        ></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Do</mat-label>
+        <input
+        matInput 
+        [value]="selectedEndDate | date: format"
+        >
+        <input
+        [matDatepicker]="pickerED"
+        [min]="minDate" 
+        [max]="maxDate" 
+        (dateChange)="getEndDate($event)"
+        class="shadow-input"
+        />     
+        <mat-datepicker-toggle matSuffix [for]="pickerED"></mat-datepicker-toggle>
+        <mat-datepicker 
+        #pickerED
+        (yearSelected)="getMaxYear($event, pickerED)"
+        (monthSelected)="getMaxMonth($event, pickerED)"
+        startView="multi-year"
+
+        ></mat-datepicker>
       </mat-form-field>
 </div>
