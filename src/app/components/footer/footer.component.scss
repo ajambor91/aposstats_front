@@ -4,6 +4,7 @@ div.footer{
     text-align: center;
     background-color: #292929;
     color: #fff;
+    font-weight: 600;
 }
 h5 {
     font-size: 13px;
@@ -19,4 +20,7 @@ h5, h6 {
 }
 h6:last-of-type {
     margin-top: 5px;
+}
+a, a:active, a:visited, a:focus{
+    color: #fff;;
 }
