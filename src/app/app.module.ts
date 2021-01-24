@@ -21,6 +21,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { AppConfig } from './app-config/app-config';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { DatePipe } from '@angular/common';
     BarComponent,
     GraphComponent,
     TableComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

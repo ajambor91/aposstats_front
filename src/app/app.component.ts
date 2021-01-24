@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Request } from './models/request/request.model';
-import { MainService } from './services/main-service';
+import { AppConfig } from './app-config/app-config';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,12 @@ import { MainService } from './services/main-service';
 })
 export class AppComponent implements OnInit{
 
-  title = 'aposstatsfront';
-
-  constructor(private mainService: MainService){}
+  title = 'AposStats - analiza apostazji';
+  startDate: string;
+  constructor(private appConfig: AppConfig){}
 
   ngOnInit(): void {
-    // this.mainService.getConfig().subscribe( res => {
-    //   console.log(res);
-    // });
+    this.startDate = this.appConfig.config.startDate;
   }
   
 }
