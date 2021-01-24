@@ -21,7 +21,7 @@
 
     <mat-form-field>
         <mat-label>Okres</mat-label>
-        <mat-select (selectionChange)="selectPeriod($event.value)">
+        <mat-select [value]="PeriodType.ByYear" (selectionChange)="selectPeriod($event.value)">
             <mat-option [value]="PeriodType.ByYear">Rocznie</mat-option>
             <mat-option [value]="PeriodType.ByMonth">Miesięcznie</mat-option>
             <mat-option [value]="PeriodType.ByDay">Dziennie</mat-option>
@@ -32,6 +32,8 @@
         <input 
         matInput
         [value]="selectedStartDate |date: format"
+        (click)="openPicker(pickerSD)"
+        (change)="setStartTypedDate($event)"
         >
         <input
         [matDatepicker]="pickerSD"
@@ -54,7 +56,9 @@
         <mat-label>Do</mat-label>
         <input
         matInput 
+        (click)="openPicker(pickerED)"
         [value]="selectedEndDate | date: format"
+        (change)="setEndTypedDate($event)"
         >
         <input
         [matDatepicker]="pickerED"

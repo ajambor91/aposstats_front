@@ -39,9 +39,7 @@ export class ChartComponent implements OnInit {
 
   selectVoivodeship(id: number | null): void {
     this.selectedVoivodeship = id;
-    if (id == null) {
-      this.selectCity(null);
-    }
+    this.selectedCity = null;
     this.getStatistics();
     this.getCities(id);
   }
@@ -66,7 +64,7 @@ export class ChartComponent implements OnInit {
     let i = 0;
     const arr = [];
     for (i; i < this.statistics[0].series.length; i++) {
-      let obj: TableData =  Object.assign({}, this.statistics[0].series[i]);;
+      let obj: TableData =  Object.assign({}, this.statistics[0].series[i]);
       arr.push(obj); 
     }
     this.dataTable = arr;

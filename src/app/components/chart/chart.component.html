@@ -1,4 +1,5 @@
 <section id="menu">
+    <div class="menu-bar">
         <app-bar 
         [voivodeships]="voivodeships"
         [cities]="cities"
@@ -7,6 +8,7 @@
         (startDateEmitter)="selectStartDate($event)"
         (endDateEmitter)="selectEndDate($event)"
         (periodEmitter)="selectPeriod($event)"></app-bar>
+    </div>
 </section>
 <section id="charts">
     <div class="ap-p-relative">

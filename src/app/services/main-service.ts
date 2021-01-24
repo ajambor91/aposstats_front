@@ -6,7 +6,9 @@ import { RequestQueryHelper } from "../helpers/request-query.helper";
 import { City } from "../models/administration-units/city.model"
 import { Voivodeship } from "../models/administration-units/voivodeship.model";
 import { Apostasy } from "../models/apostasy/apostasy.model";
+import { FirstByRegion } from "../models/request/first-by-region.model";
 import { Request } from "../models/request/request.model";
+import { FirstResponse } from "../models/statisctics/first-response.model";
 import { Statistics } from "../models/statisctics/statistic.model";
 
 @Injectable()
@@ -29,10 +31,14 @@ export class MainService{
     }
 
     getStatistics(request: Request): Observable<Statistics[]> {
-        return this.http.get<Statistics[]>(`${this.config.api}/get-statistics/${RequestQueryHelper.createQuery(request)}`);
+        return this.http.get<Statistics[]>(`${this.config.api}/get-statistics${RequestQueryHelper.createQuery(request)}`);
     }
 
     getConfig(): Observable<any> {
         return this.http.get<any>(`${this.config.api}/config`);
+    }
+
+    getFirstApostasyByRegion(data: FirstByRegion): Observable<FirstResponse> {
+        return this.http.get<FirstResponse>(`${this.config.api}/get-first-by-region${RequestQueryHelper.getFirstApostasyByRegionQuery(data)}`);
     }
 }

@@ -1,3 +1,4 @@
+import { FirstByRegion } from "../models/request/first-by-region.model";
 import { Request } from "../models/request/request.model";
 
 export class RequestQueryHelper{
@@ -29,6 +30,22 @@ export class RequestQueryHelper{
             query = this.addAmpersand(query);
             query += `periodBy=${request.periodType}`;
         }
+        return query;
+    }
+
+    static getFirstApostasyByRegionQuery(value: FirstByRegion): string {
+        let query = '?';
+
+        if(this.checkIsNotEmpty(value?.cityId)) {
+            query = this.addAmpersand(query);
+            query += `cityId=${value.cityId}`;
+        }
+
+        if(this.checkIsNotEmpty(value?.voivodeshipId)) {
+            query = this.addAmpersand(query);
+            query += `voivodeshipId=${value.voivodeshipId}`
+        }
+
         return query;
     }
 

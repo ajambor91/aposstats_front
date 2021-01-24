@@ -10,6 +10,10 @@ import {DateHelper} from 'src/app/helpers/date.helper';
 import { AppConfig } from 'src/app/app-config/app-config';
 import { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { formatDate } from '@angular/common';
+import { MainService } from 'src/app/services/main-service';
+import { FirstByRegion } from 'src/app/models/request/first-by-region.model';
+import { FirstResponse } from 'src/app/models/statisctics/first-response.model';
 
 
 
@@ -38,9 +42,13 @@ export class BarComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
   format = 'yyyy';
+  tempMinDate: string;
 
   private readonly possibleFormats = ['yyyy', 'MM.yyyy','dd.MM.yyyy']
-  constructor(private datepicker: DateAdapter<any>, private appConfig: AppConfig) { }
+
+  constructor(private datepicker: DateAdapter<any>,
+     private appConfig: AppConfig,
+     private mainService: MainService) { }
 
   ngOnInit(): void {
     this.datepicker.setLocale('pl');
@@ -50,11 +58,14 @@ export class BarComponent implements OnInit {
 
   selectVoivodeship(id: number): void {
     this.selectedVoivodeship = id;
+    this.selectedCity = null;
+    this.setMinAndMaxDate();
     this.voivodeshipIdEmitter.emit(id);
   }
 
   selectCity(id: number): void {
     this.selectedCity = id;
+    this.setMinAndMaxDate();
     this.cityIdEmitter.emit(id);
   }
 
@@ -102,6 +113,24 @@ export class BarComponent implements OnInit {
       picker.close();
     }
   }
+  
+  openPicker(dt: MatDatepicker<Moment>): void {
+    dt.open();
+  }
+
+  setStartTypedDate(event): void{
+    let date: Date;
+    let value = event.currentTarget.value;
+    date = new Date(formatDate(event.target.value, this.possibleFormats[this.selectedPeriod], 'en-US'));
+    this.setStartDate(date);
+  }
+
+  setEndTypedDate(event): void{
+    let date: Date;
+    let value = event.currentTarget.value;
+    date = new Date(formatDate(event.target.value, this.possibleFormats[this.selectedPeriod], 'en-US'));
+    this.setEndDate(date);
+  }
 
   private setStartDate(date: Date) : void {
     const formattedDate = DateHelper.dateFormat(date);
@@ -116,10 +145,39 @@ export class BarComponent implements OnInit {
   }
 
   private setMinAndMaxDate(): void {
-    const minDate = this.selectedPeriod === PeriodType.ByYear ? this.appConfig.config.firstApostasy : this.appConfig.config.startDate;
-    this.minDate = new Date(minDate);
+    if ((this.selectedVoivodeship != null || this.selectedCity != null) && this.selectedPeriod === PeriodType.ByYear) {
+      this.getFirstApostasyByRegion();
+    }else{
+      this.setFirstApostasyFromConfig();
+    }
+  }
+
+  private setFirstApostasyFromConfig(): void {
+    this.tempMinDate = this.selectedPeriod === PeriodType.ByYear ? this.appConfig.config.firstApostasy : this.appConfig.config.startDate;
+    this.parseDate();
+  }
+
+  private getFirstApostasyByRegion(): void {
+    const request: FirstByRegion = {
+      voivodeshipId: this.selectedVoivodeship,
+      cityId: this.selectedCity
+    }
+    this.mainService.getFirstApostasyByRegion(request).subscribe((res: FirstResponse) => {
+      this.tempMinDate = res.date;
+      this.parseDate();
+    });
+  }
+
+  private parseDate(): void {
+    if (this.tempMinDate.length < 5) {
+      this.tempMinDate = `${this.tempMinDate}-01-01`;
+    }
+    this.minDate = new Date(this.tempMinDate);
     const maxDate = new Date();
     this.maxDate = maxDate;
+    this.selectedStartDate = this.tempMinDate;
+    this.selectedEndDate = DateHelper.dateFormat(maxDate);
+    this.startDateEmitter.emit(this.tempMinDate);
   }
 
 }
